@@ -16,3 +16,25 @@ export interface PokemonWithImage {
   imageUrl: string;
   pokemonIndex: number;
 }
+
+export interface PokemonType {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface PokemonDetails {
+  name: string;
+  height: number;
+  weight: number;
+  types: PokemonType[];
+  sprites: {
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
+  };
+}
