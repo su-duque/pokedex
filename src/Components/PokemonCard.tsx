@@ -7,7 +7,7 @@ interface PokemonCardProps {
   pokemon: PokemonWithImage; // It only receives 1 object
 }
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
-  const { name, imageUrl } = pokemon;
+  const { name, imageUrl, pokemonIndex } = pokemon;
   const [pokemonColor, setPokemonColor] = useState<string | null>(null);
 
   const getPokemonColor = async () => {
@@ -20,7 +20,8 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   }, []);
 
   return (
-    <Card sx={{backgroundColor: pokemonColor}}>
+    <Card sx={{ backgroundColor: pokemonColor }}>
+      {/* To add a hover effect to the card: <CardActionArea></CardActionArea> */}
       <CardMedia
         component='img'
         image={imageUrl}
@@ -28,8 +29,21 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
         sx={{ height: 100, objectFit: 'contain' }}
       />
       <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Typography>{name}</Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
+            color: 'white',
+          }}
+        >
+          <Typography sx={{ textTransform: 'capitalize' }}>
+            #{pokemonIndex}
+          </Typography>
+          <Typography sx={{ textTransform: 'uppercase', fontWeight: 'bold' }}>
+            {name}
+          </Typography>
         </Box>
       </CardContent>
     </Card>
