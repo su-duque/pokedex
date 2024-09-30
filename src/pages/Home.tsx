@@ -1,12 +1,18 @@
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import PokemonList from '../Components/PokemonList';
 import usePokemon from '../hooks/usePokemon';
 
 const Home = () => {
-  const { pokemonList } = usePokemon();
+  const { pokemonList, hasMorePokemon, fetchNextPage } = usePokemon();
   return (
-    <Container> {/* Adds padding around the component */}
+    <Container>
+      {/* <Container>: Adds padding around the component */}
       <PokemonList pokemonItems={pokemonList} />
+      {hasMorePokemon && (
+        <Button variant='contained' onClick={fetchNextPage}>
+          Load More Pokemon
+        </Button>
+      )}
     </Container>
   );
 };
