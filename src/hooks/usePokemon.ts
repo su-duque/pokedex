@@ -38,17 +38,16 @@ const usePokemon = () => {
   const fetchPokemon = async () => {
     if (nextUrl) {
       const result = await httpClient.get<PokemonListResponse>(nextUrl);
-      const { results: pokemonList } = result.data;
-      if (pokemonList) {
-        const pokemonListWithImages = pokemonList.map((pokemon) =>
+      const { results: pokemonListResult, next } = result.data;
+      if (pokemonListResult) {
+        const pokemonListWithImages = pokemonListResult.map((pokemon) =>
           // Add an image to each Pokemon
           indexedPokemonToPokemonWithImage(pokemon)
         );
-        setPokemonList(pokemonListWithImages);
+        // Keep the previous pokemon (...pokemonList), and merge the new results (...pokemonListWithImages)
+        setPokemonList([...pokemonList, ...pokemonListWithImages]);
+        setNextUrl(next);
       }
-    } else {
-      //This is a placeholder for setNextUrl
-      setNextUrl('placeholder');
     }
   };
 
@@ -56,7 +55,11 @@ const usePokemon = () => {
     fetchPokemon();
   }, []);
 
-  return { pokemonList };
+  return {
+    pokemonList,
+    fetchNextPage: fetchPokemon, // To fetch more pokemon
+    hasMorePokemon: !!nextUrl, // To know if there are more pokemon to be fetched
+  };
 };
 
 export default usePokemon;
