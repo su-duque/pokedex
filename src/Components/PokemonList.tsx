@@ -1,3 +1,4 @@
+import Grid from '@mui/material/Grid2';
 import { IndexedPokemon } from '../interfaces/pokemon.interfaces';
 import PokemonCard from './PokemonCard';
 
@@ -7,10 +8,18 @@ interface PokemonListProps {
 
 const PokemonList = ({ pokemonItems }: PokemonListProps) => {
   return (
-    pokemonItems.length > 0 &&
-    pokemonItems.map((item) => {
-      return <PokemonCard key={item.name} pokemon={item} />;
-    })
+    <Grid container spacing={2}>
+      {pokemonItems.length > 0 &&
+        pokemonItems.map((item) => {
+          return (
+            <Grid size={4}>
+              {/* To have 3 cards per row - size = 4, since MIU uses a 12 points system */}
+              <PokemonCard key={item.name} pokemon={item} />
+            </Grid>
+          );
+
+        })}
+    </Grid>
   );
 };
 
