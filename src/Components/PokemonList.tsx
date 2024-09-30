@@ -11,7 +11,7 @@ const PokemonList = ({ pokemonItems }: PokemonListProps) => {
 
   return (
     <Grid container spacing={2}>
-      {/* Another wat to check if the list has items, and render it conditionally */}
+      {/* Another way to check if the list has items, and render it conditionally */}
       {/* pokemonItems.length > 0 && */}
       {pokemonItems.map((item) => {
         return (
