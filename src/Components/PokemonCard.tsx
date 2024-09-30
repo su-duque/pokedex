@@ -1,15 +1,28 @@
-import { Box, Card, CardContent, Typography } from '@mui/material';
-import { IndexedPokemon } from '../interfaces/pokemon.interfaces';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from '@mui/material';
+import { PokemonWithImage } from '../interfaces/pokemon.interfaces';
 
 interface PokemonCardProps {
-  pokemon: IndexedPokemon; // It only receives 1 object
+  pokemon: PokemonWithImage; // It only receives 1 object
 }
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+  const { name, imageUrl } = pokemon;
   return (
     <Card>
+      <CardMedia
+        component='img'
+        image={imageUrl}
+        title={name}
+        sx={{ height: 100, objectFit: 'contain' }}
+      />
       <CardContent>
-        <Box sx={{display: "flex", justifyContent: "center"}}>
-          <Typography>{pokemon.name}</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography>{name}</Typography>
         </Box>
       </CardContent>
     </Card>

@@ -1,24 +1,26 @@
 import Grid from '@mui/material/Grid2';
-import { IndexedPokemon } from '../interfaces/pokemon.interfaces';
+import { PokemonWithImage } from '../interfaces/pokemon.interfaces';
 import PokemonCard from './PokemonCard';
 
 interface PokemonListProps {
-  pokemonItems: IndexedPokemon[];
+  pokemonItems: PokemonWithImage[];
 }
 
 const PokemonList = ({ pokemonItems }: PokemonListProps) => {
+  if (!pokemonItems.length) return;
+
   return (
     <Grid container spacing={2}>
-      {pokemonItems.length > 0 &&
-        pokemonItems.map((item) => {
-          return (
-            <Grid size={4}>
-              {/* To have 3 cards per row - size = 4, since MIU uses a 12 points system */}
-              <PokemonCard key={item.name} pokemon={item} />
-            </Grid>
-          );
-
-        })}
+      {/* Another wat to check if the list has items, and render it conditionally */}
+      {/* pokemonItems.length > 0 && */}
+      {pokemonItems.map((item) => {
+        return (
+          <Grid size={4} key={item.name}>
+            {/* To have 3 cards per row - size = 4, since MIU uses a 12 points system */}
+            <PokemonCard pokemon={item} />
+          </Grid>
+        );
+      })}
     </Grid>
   );
 };
