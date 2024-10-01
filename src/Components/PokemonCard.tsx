@@ -23,7 +23,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   Cannot destructure property of undefined | null */
   const { height, weight, types, image, color } = pokemonDetails ?? {};
 
-  // TODO: Move styles to an CSS file
+  // TODO: Move styles to a CSS file
   return (
     <>
       {isLoading || !pokemonDetails ? (
