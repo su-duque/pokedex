@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
 import {
   IndexedPokemon,
+  IndexedType,
+  PokemonByTypeListResponse,
   PokemonListResponse,
   PokemonWithImage,
 } from '../interfaces/pokemon.interfaces';
-import { POKEMON_API_POKEMON_URL, POKEMON_IMAGE_BASE_URL, POKEMON_TYPES } from '../constants';
+import {
+  POKEMON_API_POKEMON_URL,
+  POKEMON_IMAGE_BASE_URL,
+  POKEMON_TYPES,
+} from '../constants';
 import { httpClient } from '../api/httpClient'; // axios instance
 
 const usePokemon = () => {
@@ -12,6 +18,8 @@ const usePokemon = () => {
   const [nextUrl, setNextUrl] = useState<string | null>(
     POKEMON_API_POKEMON_URL
   );
+
+  const [selectedType, setSelectedType] = useState<IndexedType | null>(null);
 
   const indexedPokemonToPokemonWithImage = (indexedPokemon: IndexedPokemon) => {
     const { name, url } = indexedPokemon;
@@ -51,15 +59,38 @@ const usePokemon = () => {
     }
   };
 
+  const fetchPokemonByType = async () => {
+    if (selectedType) {
+      const responseByType = await httpClient.get<PokemonByTypeListResponse>(
+        selectedType.url
+      );
+      if (responseByType.data.pokemon) {
+        // TODO: DO I need this map? I don't need the images
+        const pokemonByTypeList = responseByType.data.pokemon.map((item) =>
+          indexedPokemonToPokemonWithImage(item.pokemon)
+        );
+        setPokemonList(pokemonByTypeList);
+        setNextUrl(POKEMON_API_POKEMON_URL); // Resetting the Next URL
+      }
+    }
+  };
+
   useEffect(() => {
-    fetchPokemon();
-  }, []);
+    if (selectedType) {
+      fetchPokemonByType();
+    } else {
+      fetchPokemon();
+    }
+  }, [selectedType]); // It runs the first time and every time the selectedType changes
 
   return {
     pokemonList,
     fetchNextPage: fetchPokemon, // To fetch more pokemon
     hasMorePokemon: !!nextUrl, // To know if there are more pokemon to be fetched
-    pokemonTypes: POKEMON_TYPES,
+    pokemonTypes: POKEMON_TYPES, // TODO: REMOVE, Import from Home Page
+    selectedType,
+    setSelectedType,
+    setPokemonList,
   };
 };
 

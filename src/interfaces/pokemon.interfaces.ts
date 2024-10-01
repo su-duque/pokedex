@@ -39,3 +39,13 @@ export interface IndexedType {
   url: string;
   color: string;
 }
+
+export interface IndexedPokemonByType {
+  pokemon: IndexedPokemon;
+  slot: string;
+}
+
+export interface PokemonByTypeListResponse {
+  id: number;
+  pokemon: IndexedPokemonByType[];
+}
