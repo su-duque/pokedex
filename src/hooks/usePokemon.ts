@@ -4,7 +4,7 @@ import {
   PokemonListResponse,
   PokemonWithImage,
 } from '../interfaces/pokemon.interfaces';
-import { POKEMON_API_POKEMON_URL, POKEMON_IMAGE_BASE_URL } from '../constants';
+import { POKEMON_API_POKEMON_URL, POKEMON_IMAGE_BASE_URL, POKEMON_TYPES } from '../constants';
 import { httpClient } from '../api/httpClient'; // axios instance
 
 const usePokemon = () => {
@@ -59,6 +59,7 @@ const usePokemon = () => {
     pokemonList,
     fetchNextPage: fetchPokemon, // To fetch more pokemon
     hasMorePokemon: !!nextUrl, // To know if there are more pokemon to be fetched
+    pokemonTypes: POKEMON_TYPES,
   };
 };
 
