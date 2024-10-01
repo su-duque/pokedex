@@ -19,8 +19,11 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     pokemonName: name,
   });
 
+  /* Nullish coalescing operator (??) required to avoid error:
+  Cannot destructure property of undefined | null */
   const { height, weight, types, image, color } = pokemonDetails ?? {};
 
+  // TODO: Move styles to an CSS file
   return (
     <>
       {isLoading || !pokemonDetails ? (
