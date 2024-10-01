@@ -33,3 +33,9 @@ export interface PokemonDetails {
   image: string;
   color?: string | null;
 }
+
+export interface IndexedType {
+  name: string;
+  url: string;
+  color: string;
+}
