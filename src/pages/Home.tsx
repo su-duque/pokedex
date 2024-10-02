@@ -1,14 +1,14 @@
-import { Button, Container } from '@mui/material';
+import { Button, Container, Pagination } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import PokemonList from '../Components/PokemonList';
 import usePokemon from '../hooks/usePokemon';
 import { IndexedType } from '../interfaces/pokemon.interfaces';
 import { TYPE_COLORS } from '../constants';
+import { useState } from 'react';
 
 const Home = () => {
   const {
     pokemonList,
-    hasMorePokemon,
     fetchNextPage,
     pokemonTypes,
     selectedType,
@@ -25,10 +25,25 @@ const Home = () => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePagination = (
+    _event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setCurrentPage(value);
+    fetchNextPage(value);
+  };
+
   return (
-    <Container>
+    <Container sx={{ marginBottom: '8px' }}>
       {/* <Container>: Adds padding around the component */}
-      <Grid container spacing={2} mt={1}>
+      <Grid
+        container
+        spacing={2}
+        mt={1}
+        sx={{ display: 'flex', justifyContent: 'center' }}
+      >
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             variant='contained'
@@ -59,11 +74,20 @@ const Home = () => {
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <PokemonList pokemonItems={pokemonList} />
         </Grid>
-        {hasMorePokemon && (
-          <Button variant='contained' onClick={fetchNextPage}>
-            Load More Pokemon
-          </Button>
-        )}
+        <Pagination
+          count={10}
+          page={currentPage}
+          onChange={handlePagination}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            '&.MuiPagination-root': {},
+            '& .MuiPaginationItem-root.Mui-selected': {
+              backgroundColor: 'pink',
+              color: 'white',
+            },
+          }}
+        />
       </Grid>
     </Container>
   );

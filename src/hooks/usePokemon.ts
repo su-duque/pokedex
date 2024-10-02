@@ -43,17 +43,26 @@ const usePokemon = () => {
     return pokemonWithImage;
   };
 
-  const fetchPokemon = async () => {
+  const fetchPokemon = async (page: number = 1) => {
     if (nextUrl) {
-      const result = await httpClient.get<PokemonListResponse>(nextUrl);
+      const limitItemsPerPage = 20;
+
+      // Getting the nextUrl based on the selected page
+      const urlObj = new URL(nextUrl);
+      urlObj.searchParams.set(
+        'offset',
+        `${page * limitItemsPerPage - limitItemsPerPage}`
+      );
+      const updatedUrl = urlObj.toString(); // nextUrl based on the selected page
+
+      const result = await httpClient.get<PokemonListResponse>(updatedUrl);
       const { results: pokemonListResult, next } = result.data;
       if (pokemonListResult) {
         const pokemonListWithImages = pokemonListResult.map((pokemon) =>
           // Add an image to each Pokemon
           indexedPokemonToPokemonWithImage(pokemon)
         );
-        // Keep the previous pokemon (...pokemonList), and merge the new results (...pokemonListWithImages)
-        setPokemonList([...pokemonList, ...pokemonListWithImages]);
+        setPokemonList(pokemonListWithImages);
         setNextUrl(next);
       }
     }
