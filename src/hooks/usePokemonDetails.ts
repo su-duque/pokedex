@@ -3,6 +3,7 @@ import { PokemonDetails } from '../interfaces/pokemon.interfaces';
 import { POKEMON_API_POKEMON_URL } from '../constants';
 import { httpClient } from '../api/httpClient';
 import { getColorFromUrl } from '../utils/color';
+import pokeBall from '../shared/assets/poke-ball.png';
 
 interface UsePokemonDetailsProps {
   pokemonName: string | undefined;
@@ -36,7 +37,7 @@ function usePokemonDetails({ pokemonName }: UsePokemonDetailsProps) {
           height,
           weight,
           types,
-          image: front_default,
+          image: front_default ?? pokeBall,
         };
         setPokemonDetails(filteredPokemonDetails);
       }
