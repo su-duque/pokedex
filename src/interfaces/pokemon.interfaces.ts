@@ -37,7 +37,6 @@ export interface PokemonDetails {
 export interface IndexedType {
   name: string;
   url: string;
-  color: string;
 }
 
 export interface IndexedPokemonByType {

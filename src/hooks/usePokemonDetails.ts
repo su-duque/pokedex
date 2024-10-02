@@ -21,7 +21,7 @@ function usePokemonDetails({ pokemonName }: UsePokemonDetailsProps) {
       if (color) setPokemonDetails({ ...pokemonDetails, color });
       // Adding the color property to PokemonDetails, value obtained from the average color calculation
     }
-    };
+  };
 
   const fetchPokemonDetails = async () => {
     if (pokemonName) {
