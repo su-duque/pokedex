@@ -18,8 +18,10 @@ const Home = () => {
 
   const handleSelectedType = (type: IndexedType | null) => {
     if (type) {
+      console.log('*** ~ file: Home.tsx:21 ~ handleSelectedType ~ type:', type);
       setSelectedType(type);
     } else if (selectedType !== null) {
+      console.log('*** ~ file: Home.tsx:21 ~ handleSelectedType ~ ELSE IF:');
       setSelectedType(null);
       setPokemonList([]);
     }
@@ -34,6 +36,11 @@ const Home = () => {
     setCurrentPage(value);
     fetchNextPage(value);
   };
+
+  const isSelected = (typeName: string) => {
+    // If selectedType?.name is null, all the buttons must be enabled, so the function returns true
+    return selectedType?.name ? typeName === selectedType?.name : true;
+  }
 
   return (
     <Container sx={{ marginBottom: '8px' }}>
@@ -66,6 +73,7 @@ const Home = () => {
               }}
               onClick={() => handleSelectedType(type)}
               key={type.name}
+              disabled={!isSelected(type.name)}
             >
               {type.name}
             </Button>
