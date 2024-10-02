@@ -18,10 +18,8 @@ const Home = () => {
 
   const handleSelectedType = (type: IndexedType | null) => {
     if (type) {
-      console.log('*** ~ file: Home.tsx:21 ~ handleSelectedType ~ type:', type);
       setSelectedType(type);
     } else if (selectedType !== null) {
-      console.log('*** ~ file: Home.tsx:21 ~ handleSelectedType ~ ELSE IF:');
       setSelectedType(null);
       setPokemonList([]);
     }
