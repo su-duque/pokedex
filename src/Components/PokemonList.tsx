@@ -15,8 +15,8 @@ const PokemonList = ({ pokemonItems }: PokemonListProps) => {
       {/* pokemonItems.length > 0 && */}
       {pokemonItems.map((item) => {
         return (
-          <Grid size={4} key={item.name}>
-            {/* To have 3 cards per row - size = 4, since MIU uses a 12 points system */}
+          <Grid size={3} key={item.name}>
+            {/* To have 4 cards per row - size = 3, since MIU uses a 12 points system */}
             <PokemonCard pokemon={item} />
           </Grid>
         );

@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid2';
 import PokemonList from '../Components/PokemonList';
 import usePokemon from '../hooks/usePokemon';
 import { IndexedType } from '../interfaces/pokemon.interfaces';
+import { TYPE_COLORS } from '../constants';
 
 const Home = () => {
   const {
@@ -45,7 +46,7 @@ const Home = () => {
               variant='contained'
               sx={{
                 '&.MuiButton-contained': {
-                  backgroundColor: type.color,
+                  backgroundColor: TYPE_COLORS[type.name],
                 },
               }}
               onClick={() => handleSelectedType(type)}

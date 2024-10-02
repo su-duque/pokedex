@@ -3,11 +3,13 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Chip,
   CircularProgress,
   Typography,
 } from '@mui/material';
 import { PokemonWithImage } from '../interfaces/pokemon.interfaces';
 import usePokemonDetails from '../hooks/usePokemonDetails';
+import { TYPE_COLORS } from '../constants';
 
 interface PokemonCardProps {
   pokemon: PokemonWithImage; // It only receives 1 object
@@ -49,21 +51,16 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                color: 'white',
-                gap: 2,
+                gap: 1,
               }}
             >
-              <Typography
+              <Chip
                 sx={{
-                  display: 'flex',
-                  textTransform: 'capitalize',
                   flex: 1,
-                  justifyContent: 'center',
-                  backgroundColor: 'PaleVioletRed',
+                  fontWeight: 'bold',
                 }}
-              >
-                #{pokemonIndex}
-              </Typography>
+                label={'#' + pokemonIndex}
+              />
               <Typography
                 sx={{
                   display: 'flex',
@@ -71,6 +68,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                   fontWeight: 'bold',
                   justifyContent: 'center',
                   flex: 2,
+                  color: 'white',
                 }}
               >
                 {name}
@@ -81,19 +79,20 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                 display: 'flex',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                color: 'white',
               }}
             >
               {types?.map((item) => (
-                <Typography
+                <Chip
+                  label={item.type.name}
                   key={item.type.name}
                   sx={{
-                    textTransform: 'capitalize',
-                    backgroundColor: 'Plum',
+                    backgroundColor: TYPE_COLORS[item.type.name],
+                    '& .MuiChip-label': {
+                      color: 'white',
+                      textTransform: 'uppercase',
+                    },
                   }}
-                >
-                  {item.type.name}
-                </Typography>
+                />
               ))}
             </Box>
             <Box
@@ -101,28 +100,23 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                 display: 'flex',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                color: 'white',
               }}
             >
               {weight && (
-                <Typography
+                <Chip
                   sx={{
-                    textTransform: 'capitalize',
-                    backgroundColor: 'LightCoral',
+                    backgroundColor: 'pink',
                   }}
-                >
-                  {weight}kg
-                </Typography>
+                  label={weight + 'kg'}
+                />
               )}
               {height && (
-                <Typography
+                <Chip
                   sx={{
-                    textTransform: 'capitalize',
-                    backgroundColor: 'LightCoral',
+                    backgroundColor: 'pink',
                   }}
-                >
-                  {height}m
-                </Typography>
+                  label={height + 'm'}
+                />
               )}
             </Box>
           </CardContent>
