@@ -1,8 +1,9 @@
-import { Container, Pagination } from '@mui/material';
+import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import PokemonList from '../Components/PokemonList';
-import usePokemon from '../hooks/usePokemon';
 import PokemonFilter from '../Components/PokemonFilter';
+import PokemonPagination from '../Components/PokemonPagination';
+import usePokemon from '../hooks/usePokemon';
 
 const Home = () => {
   const {
@@ -18,18 +19,6 @@ const Home = () => {
     numberOfPokemonPerPage,
   } = usePokemon();
 
-  const handlePagination = (
-    _event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setCurrentPage(value);
-    if (selectedType?.name) {
-      fetchPokemonByType(value);
-    } else {
-      fetchPokemon(value);
-    }
-  };
-
   return (
     <Container>
       {/* <Container>: Adds padding around the component */}
@@ -40,10 +29,7 @@ const Home = () => {
         mb={1} // margin-bottom
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
-        <Grid
-          container
-          sx={{ display: 'flex', justifyContent: 'center' }}
-        >
+        <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <PokemonFilter
             pokemonTypes={pokemonTypes}
             setSelectedType={setSelectedType}
@@ -52,38 +38,28 @@ const Home = () => {
           />
         </Grid>
         <Container>
-          <Pagination
-            count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
-            page={currentPage}
-            onChange={handlePagination}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              '&.MuiPagination-root': {},
-              '& .MuiPaginationItem-root.Mui-selected': {
-                backgroundColor: 'pink',
-                color: 'white',
-              },
-            }}
+          <PokemonPagination
+            selectedType={selectedType}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            fetchPokemonByType={fetchPokemonByType}
+            fetchPokemon={fetchPokemon}
+            totalNumberOfPokemon={totalNumberOfPokemon}
+            numberOfPokemonPerPage={numberOfPokemonPerPage}
           />
         </Container>
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <PokemonList pokemonItems={pokemonList} />
         </Grid>
         <Container>
-          <Pagination
-            count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
-            page={currentPage}
-            onChange={handlePagination}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              '&.MuiPagination-root': {},
-              '& .MuiPaginationItem-root.Mui-selected': {
-                backgroundColor: 'pink',
-                color: 'white',
-              },
-            }}
+          <PokemonPagination
+            selectedType={selectedType}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            fetchPokemonByType={fetchPokemonByType}
+            fetchPokemon={fetchPokemon}
+            totalNumberOfPokemon={totalNumberOfPokemon}
+            numberOfPokemonPerPage={numberOfPokemonPerPage}
           />
         </Container>
       </Grid>
