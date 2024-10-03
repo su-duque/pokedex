@@ -1,9 +1,8 @@
-import { Button, Container, Pagination } from '@mui/material';
+import { Container, Pagination } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import PokemonList from '../Components/PokemonList';
 import usePokemon from '../hooks/usePokemon';
-import { IndexedType } from '../interfaces/pokemon.interfaces';
-import { TYPE_COLORS } from '../constants';
+import PokemonFilter from '../Components/PokemonFilter';
 
 const Home = () => {
   const {
@@ -19,11 +18,6 @@ const Home = () => {
     numberOfPokemonPerPage,
   } = usePokemon();
 
-  const handleSelectedType = (type: IndexedType | null) => {
-    setSelectedType(type ? type : null); // null to see ALL Pokemon
-    setCurrentPage(1); // Reset because the pokemon type changed
-  };
-
   const handlePagination = (
     _event: React.ChangeEvent<unknown>,
     value: number
@@ -36,11 +30,6 @@ const Home = () => {
     }
   };
 
-  const isSelected = (typeName: string) => {
-    // If selectedType?.name is null, all the buttons must be enabled, so the function returns true
-    return selectedType?.name ? typeName === selectedType?.name : true;
-  };
-
   return (
     <Container>
       {/* <Container>: Adds padding around the component */}
@@ -51,33 +40,16 @@ const Home = () => {
         mb={1} // margin-bottom
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
-        <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            variant='contained'
-            sx={{
-              '&.MuiButton-contained': {
-                backgroundColor: 'pink',
-              },
-            }}
-            onClick={() => handleSelectedType(null)}
-          >
-            ALL
-          </Button>
-          {pokemonTypes.map((type) => (
-            <Button
-              variant='contained'
-              sx={{
-                '&.MuiButton-contained': {
-                  backgroundColor: TYPE_COLORS[type.name],
-                },
-              }}
-              onClick={() => handleSelectedType(type)}
-              key={type.name}
-              disabled={!isSelected(type.name)}
-            >
-              {type.name}
-            </Button>
-          ))}
+        <Grid
+          container
+          sx={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <PokemonFilter
+            pokemonTypes={pokemonTypes}
+            setSelectedType={setSelectedType}
+            setCurrentPage={setCurrentPage}
+            selectedType={selectedType}
+          />
         </Grid>
         <Container>
           <Pagination

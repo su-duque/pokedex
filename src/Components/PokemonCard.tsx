@@ -29,7 +29,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <>
       {isLoading || !pokemonDetails ? (
-        <CircularProgress color='warning' />
+        <CircularProgress color='warning' /> // TODO: Change color
       ) : (
         <Card sx={{ backgroundColor: color }}>
           {/* To add a hover effect to the card: <CardActionArea></CardActionArea> */}
