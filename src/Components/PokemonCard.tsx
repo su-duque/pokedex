@@ -7,23 +7,23 @@ import {
   CircularProgress,
   Typography,
 } from '@mui/material';
-import { PokemonWithImage } from '../interfaces/pokemon.interfaces';
+import { IndexedPokemon } from '../interfaces/pokemon.interfaces';
 import usePokemonDetails from '../hooks/usePokemonDetails';
 import { TYPE_COLORS } from '../constants';
 
 interface PokemonCardProps {
-  pokemon: PokemonWithImage; // It only receives 1 object
+  pokemon: IndexedPokemon; // It only receives 1 object
 }
 
 const PokemonCard = ({ pokemon }: PokemonCardProps) => {
-  const { name, pokemonIndex } = pokemon;
+  const { name } = pokemon;
   const { pokemonDetails, isLoading } = usePokemonDetails({
     pokemonName: name,
   });
 
   /* Nullish coalescing operator (??) required to avoid error:
   Cannot destructure property of undefined | null */
-  const { height, weight, types, image, color } = pokemonDetails ?? {};
+  const { height, weight, types, image, color, id } = pokemonDetails ?? {};
 
   // TODO: Move styles to a CSS file
   return (
@@ -59,7 +59,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                   flex: 1,
                   fontWeight: 'bold',
                 }}
-                label={'#' + pokemonIndex}
+                label={'#'+ id}
               />
               <Typography
                 sx={{

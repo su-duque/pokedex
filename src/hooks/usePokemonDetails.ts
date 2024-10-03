@@ -30,7 +30,7 @@ function usePokemonDetails({ pokemonName }: UsePokemonDetailsProps) {
       const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
       const response = await httpClient.get(url); // TODO: Create response type
       if (response.data) {
-        const { name, height, weight, types, sprites } = response.data;
+        const { name, height, weight, types, sprites, id } = response.data;
         const { front_default } = sprites.other['official-artwork'];
         const filteredPokemonDetails: PokemonDetails = {
           name,
@@ -38,6 +38,7 @@ function usePokemonDetails({ pokemonName }: UsePokemonDetailsProps) {
           weight,
           types,
           image: front_default ?? pokeBall,
+          id,
         };
         setPokemonDetails(filteredPokemonDetails);
       }
