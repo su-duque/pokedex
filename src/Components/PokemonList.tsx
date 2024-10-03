@@ -15,6 +15,7 @@ const PokemonList = ({ pokemonItems }: PokemonListProps) => {
       {/* pokemonItems.length > 0 && */}
       {pokemonItems.map((item) => {
         return (
+          // TODO: sx={{ width: 'auto' }} might fix the issue of compressed cards on last page
           <Grid size={3} key={item.name}>
             {/* To have 4 cards per row - size = 3, since MIU uses a 12 points system */}
             <PokemonCard pokemon={item} />

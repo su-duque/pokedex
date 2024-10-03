@@ -59,7 +59,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
                   flex: 1,
                   fontWeight: 'bold',
                 }}
-                label={'#'+ id}
+                label={'#' + id}
               />
               <Typography
                 sx={{

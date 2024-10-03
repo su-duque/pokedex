@@ -79,37 +79,41 @@ const Home = () => {
             </Button>
           ))}
         </Grid>
-        <Pagination
-          count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
-          page={currentPage}
-          onChange={handlePagination}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            '&.MuiPagination-root': {},
-            '& .MuiPaginationItem-root.Mui-selected': {
-              backgroundColor: 'pink',
-              color: 'white',
-            },
-          }}
-        />
+        <Container>
+          <Pagination
+            count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
+            page={currentPage}
+            onChange={handlePagination}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              '&.MuiPagination-root': {},
+              '& .MuiPaginationItem-root.Mui-selected': {
+                backgroundColor: 'pink',
+                color: 'white',
+              },
+            }}
+          />
+        </Container>
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <PokemonList pokemonItems={pokemonList} />
         </Grid>
-        <Pagination
-          count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
-          page={currentPage}
-          onChange={handlePagination}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            '&.MuiPagination-root': {},
-            '& .MuiPaginationItem-root.Mui-selected': {
-              backgroundColor: 'pink',
-              color: 'white',
-            },
-          }}
-        />
+        <Container>
+          <Pagination
+            count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
+            page={currentPage}
+            onChange={handlePagination}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              '&.MuiPagination-root': {},
+              '& .MuiPaginationItem-root.Mui-selected': {
+                backgroundColor: 'pink',
+                color: 'white',
+              },
+            }}
+          />
+        </Container>
       </Grid>
     </Container>
   );
