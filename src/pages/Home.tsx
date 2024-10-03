@@ -9,11 +9,14 @@ import { useState } from 'react';
 const Home = () => {
   const {
     pokemonList,
-    fetchNextPage,
+    fetchPokemon,
+    fetchPokemonByType,
     pokemonTypes,
     selectedType,
     setSelectedType,
     setPokemonList,
+    totalNumberOfPokemon,
+    numberOfPokemonPerPage,
   } = usePokemon();
 
   const handleSelectedType = (type: IndexedType | null) => {
@@ -23,6 +26,7 @@ const Home = () => {
       setSelectedType(null);
       setPokemonList([]);
     }
+    setCurrentPage(1); //Reset the page
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,21 +36,26 @@ const Home = () => {
     value: number
   ) => {
     setCurrentPage(value);
-    fetchNextPage(value);
+    if (selectedType?.name) {
+      fetchPokemonByType(value);
+    } else {
+      fetchPokemon(value);
+    }
   };
 
   const isSelected = (typeName: string) => {
     // If selectedType?.name is null, all the buttons must be enabled, so the function returns true
     return selectedType?.name ? typeName === selectedType?.name : true;
-  }
+  };
 
   return (
-    <Container sx={{ marginBottom: '8px' }}>
+    <Container>
       {/* <Container>: Adds padding around the component */}
       <Grid
         container
         spacing={2}
-        mt={1}
+        mt={1} // margin-top
+        mb={1} // margin-bottom
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -81,7 +90,7 @@ const Home = () => {
           <PokemonList pokemonItems={pokemonList} />
         </Grid>
         <Pagination
-          count={10}
+          count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
           page={currentPage}
           onChange={handlePagination}
           sx={{
