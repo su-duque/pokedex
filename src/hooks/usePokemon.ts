@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { httpClient } from '../api/httpClient'; // axios instance
 import {
   IndexedPokemon,
   IndexedType,
@@ -6,16 +7,15 @@ import {
   PokemonListResponse,
 } from '../interfaces/pokemon.interfaces';
 import { POKEMON_API_POKEMON_URL, POKEMON_TYPES } from '../constants';
-import { httpClient } from '../api/httpClient'; // axios instance
 
 const usePokemon = () => {
   const [pokemonList, setPokemonList] = useState<IndexedPokemon[]>([]);
   const [totalNumberOfPokemon, setTotalNumberOfPokemon] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const numberOfPokemonPerPage = 20;
-
   const [selectedType, setSelectedType] = useState<IndexedType | null>(null);
 
-  const fetchPokemon = async (page: number = 1) => {
+  const fetchPokemon = async (page: number) => {
     try {
       const url = `${POKEMON_API_POKEMON_URL}?limit=${numberOfPokemonPerPage}&offset=${
         page * numberOfPokemonPerPage - numberOfPokemonPerPage
@@ -32,7 +32,7 @@ const usePokemon = () => {
     }
   };
 
-  const fetchPokemonByType = async (page: number = 1) => {
+  const fetchPokemonByType = async (page: number) => {
     try {
       if (!selectedType) return;
       const responseByType = await httpClient.get<PokemonByTypeListResponse>(
@@ -56,13 +56,17 @@ const usePokemon = () => {
 
   useEffect(() => {
     if (selectedType) {
-      fetchPokemonByType();
+      fetchPokemonByType(currentPage);
     } else {
-      fetchPokemon();
+      fetchPokemon(currentPage);
     }
-  }, [selectedType]); // It runs the first time and every time the selectedType changes
+    /* currentPage is reset to 1 when the Pokemon type changes, or when the same type is selected.
+    This useEffect should depend on the currentPage to update the pokemon list */
+  }, [selectedType, currentPage]);
 
   return {
+    currentPage,
+    setCurrentPage,
     pokemonList,
     fetchPokemon,
     fetchPokemonByType,

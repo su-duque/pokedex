@@ -4,32 +4,25 @@ import PokemonList from '../Components/PokemonList';
 import usePokemon from '../hooks/usePokemon';
 import { IndexedType } from '../interfaces/pokemon.interfaces';
 import { TYPE_COLORS } from '../constants';
-import { useState } from 'react';
 
 const Home = () => {
   const {
+    currentPage,
+    setCurrentPage,
     pokemonList,
     fetchPokemon,
     fetchPokemonByType,
     pokemonTypes,
     selectedType,
     setSelectedType,
-    setPokemonList,
     totalNumberOfPokemon,
     numberOfPokemonPerPage,
   } = usePokemon();
 
   const handleSelectedType = (type: IndexedType | null) => {
-    if (type) {
-      setSelectedType(type);
-    } else if (selectedType !== null) {
-      setSelectedType(null);
-      setPokemonList([]);
-    }
-    setCurrentPage(1); //Reset the page
+    setSelectedType(type ? type : null); // null to see ALL Pokemon
+    setCurrentPage(1); // Reset because the pokemon type changed
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePagination = (
     _event: React.ChangeEvent<unknown>,
@@ -86,6 +79,20 @@ const Home = () => {
             </Button>
           ))}
         </Grid>
+        <Pagination
+          count={Math.ceil(totalNumberOfPokemon / numberOfPokemonPerPage)}
+          page={currentPage}
+          onChange={handlePagination}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            '&.MuiPagination-root': {},
+            '& .MuiPaginationItem-root.Mui-selected': {
+              backgroundColor: 'pink',
+              color: 'white',
+            },
+          }}
+        />
         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
           <PokemonList pokemonItems={pokemonList} />
         </Grid>
